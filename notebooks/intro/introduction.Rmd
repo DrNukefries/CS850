@@ -1,0 +1,147 @@
+---
+title: "Introduction to R Notebooks"
+output:
+  pdf_document:
+    fig_width: 3
+    fig_height: 2
+---
+
+This notebook demonstrates how to plot data and write simple reports.
+
+# R Markdown
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing code chunks below by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*.
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+LaTeX math notation also works: $Y \approx \beta_0 + \beta_1 \times X$. Or if you want to have an equation on a line all by itself:
+$$ Y \approx \beta_0 + \beta_1 \times X $$
+
+For a good reference on typing mathematical formulas using LaTeX, see, for example [this tutorial](https://en.wikibooks.org/wiki/LaTeX/Mathematics).
+
+# Plotting
+
+**Step 1**: Download data for the "Introduction to Statistical Learning" (*you may need to do this manually on non-linux operating systems*)
+```{bash, cache=TRUE, results='hide'}
+cd /tmp
+wget https://www.statlearning.com/s/Advertising.csv
+```
+
+If the above does not work, you can instead run the following code to load the file from the web directly.
+```{r}
+if(!requireNamespace("readr")){install.packages("readr")}
+ads <- readr::read_csv("https://www.statlearning.com/s/Advertising.csv", show_col_types = FALSE)
+library(readr)
+```
+The package `readr` is a set of tools that are faster, safer, and easier to use than the built-in read.csv tools.
+
+**Step 2**: Load the dataset from the CSV
+```{r, cache=TRUE}
+if(!("ads" %in% ls())){ # check if not loaded already
+  ads <- read.csv("/tmp/Advertising.csv")  
+}
+```
+
+**Step 3**: Summarize the data
+```{r}
+summary(ads)
+```
+
+**Step 5**: Plot the dataset
+```{r, fig.align='center'}
+plot(ads$TV, ads$sales,col='red',pch=20,xlab = "TV", ylab = "Sales")
+```
+
+**Step 6**: Or generate prettier plots  with `ggplot2`
+```{r}
+if("ggplot2" %in% rownames(installed.packages()) == FALSE) {install.packages("ggplot2")}
+```
+
+GGPlot is not easy to learn, but it is worth it. It makes it very convenient to plot complex data in a way that is quick and flexible.  See [here](https://ggplot2.tidyverse.org/) for more details.
+
+```{r,fig.align='center'}
+library(ggplot2) #install.packages("ggplot2")
+ad.plot <- ggplot(ads, aes(x=TV,y=sales)) + 
+  geom_point() + 
+  geom_smooth(method="loess") + labs(x="TV",y ="Sales") + 
+  theme_light()
+ad.plot
+```
+
+**Step 7**: Have fun with themes
+
+There are many packages that extend the funcitonality of ggplot. For example, you can customize the themes that are used. You can replicate the excel theme.
+```{r,fig.align='center'}
+library(ggthemes) #install.packages("ggthemes")
+ad.plot + theme_excel()
+```
+
+Or try something different, like a Wall Street Journal theme.
+```{r,fig.align='center'}
+ad.plot + theme_wsj()
+```
+
+**Step 8**: Data processing
+
+R has some power tools that are built in that make it easy and convenient to process tabular data. There are also some packages that make it easier and cleaner to work with this data. [Tidyverse](https://www.tidyverse.org/) is a collection of packages cooperate well and can be used to work with "tidy data". 
+
+[Tidy data](https://tidyr.tidyverse.org/articles/tidy-data.html) is a tabular dataset such that:
+
+1. Every column is a variable.
+2. Every row is an observation.
+3. Every cell is a single value.
+
+Such data is easy to manipulate and understand. 
+
+The most important package from this family is `dplyr`. We load is first.
+```{r}
+if(!requireNamespace("dplyr")){install.packages("dplyr")}
+library(dplyr)
+```
+With this package, you can filter data:
+```{r}
+ads %>% filter(TV > 200)
+```
+
+You can also group and average data.
+```{r}
+ads %>% mutate(TV_d = round(TV/10)) %>%
+  group_by(TV_d) %>%
+  summarize(sales = mean(sales)) %>%
+  mutate(TV = TV_d * 10) %>% select(TV, sales)
+```
+
+**Step 9: More advanced plotting**
+
+The package tidyr can help with making the data more or less tidy.
+
+```{r}
+if(!requireNamespace("tidyr")){install.packages("tidyr")}
+library(tidyr)
+```
+
+```{r}
+ads2 <- pivot_longer(ads, 
+                     c(TV, radio, newspaper), 
+                     names_to = "media",
+                     values_to = "spending")
+ads2
+```
+
+
+```{r}
+ggplot(ads2, aes(x=spending, y=sales, color=media)) + 
+  geom_point() +
+  theme_light() +
+  facet_wrap(~media)
+```
+
+
+#+ facet_grid(~media)
+
+
+

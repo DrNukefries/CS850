@@ -5,8 +5,8 @@ output:
   format: pdf
 ---
 
--   **Due**: Tuesday 9/05 at 11:59PM
--   **Submission**: Turn in as a **PDF** and the **source code** (qmd) on [MyCourses](http://mycourses.unh.edu). Please do not submit IPython ipynb notebooks, but convert them to qmd (see <https://quarto.org/docs/tools/jupyter-lab.html#converting-notebooks>).
+-   **Due**: Thursday 9/04 at 11:59PM AOE
+-   **Submission**: Turn in as a **PDF** and the **source code** (qmd or ipynb) on [MyCourses](http://mycourses.unh.edu). You can directly submit an IPython ipynb notebook, or convert it to qmd (see <https://quarto.org/docs/tools/jupyter-lab.html#converting-notebooks>).
 
 This document is created in Quarto which is an extension of the popular Markdown document format. Please see <https://quarto.org/> for more details on how to create Quarto documents and on development tools that are available.
 
@@ -23,7 +23,7 @@ To learn to use R (<https://www.r-project.org/>) or Python, read the labs in Cha
 3.  Produce a scatterplot matrix of all variables
 4.  Produce a histogram of TV advertising
 
-You are free to use Python or Julia, but then you are on your own when it comes to installing all the necessary tools. You can, however, use the Python version of the ISLR textbook. We cannot guarantee being able to help with the assignments or installation of Python development tools. You can use Rstudio, VS Code, vim, emacs, jupyter, or any editor that you may be familiar with.
+You are free to use Python, but then you are on your own when it comes to installing all the necessary tools. You can, however, use the Python version of the ISLR textbook. We cannot guarantee being able to help with the assignments or installation of Python development tools. You can use Rstudio, VS Code, vim, emacs, jupyter, or any editor that you may be familiar with.
 
 ### Hints
 

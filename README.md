@@ -54,7 +54,7 @@ Please let me know if any links to material that we have covered are broken.
 - *Discussion*: Please use mycourses (canvas) 
 
 - *Sam*:  By appointment
-- *Maeve* (TA): Tuesdays 1-2 PM, CS open space (by office 249)
+- *Maeve* (TA): Tuesdays 1-2 PM, Kingsbury CS open space (W244)
 
 
 ## Assignments
